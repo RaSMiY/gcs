@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+
+<html ng-app="gridMatrix" ng-controller="craft">
+    <head>
+        <title>Проверка эффективности матрицы элементов в grid-container</title>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Создадим grid-container с большим числом элементов и начнём перемещать, вращать и производить над ними другие действия">
+        <meta name="keywords" content="Матрица элементов в grid-container">
+        <meta name="author" content="RaSMiY">
+        <meta name="application-name" content="GridMatrix">
+        <!--meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"-->
+        <meta name="viewport" content="width=device-width, initial-scale=0.7, shrink-to-fit=yes">
+
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css' />
+        <link rel="stylesheet" type="text/css" href='css/gridmatrix.css' />
+        
+		<style>
+			.grid-container {
+  		  	  display: grid;
+  		  	  grid-template-columns: {{buildTemplate(number)}};
+  		  	  grid-gap: 10px;
+/*			  justify-content: space-between;*/
+			}
+		</style>		
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>        
+    
+        <script type="text/javascript">
+            window.onerror = function (msg, url, num) {
+                alert(msg + ';' + url + ';' + num);
+                return true;
+            }
+        </script>
+		
+    </head>
+
+<!--------GridMatrix---------------author: RaSMiY-------
+Program written to check the potential of grid-container matrix for some special tasks
+
+/*/============================Блок лицензии============================================
+Copyright (c) RaSMiY semenov@razum.top
+This file is part of GridMatrix project.
+
+    GridMatrix project is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    GridMatrix project is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with GridMatrix project.  If not, see <http://www.gnu.org/licenses/>.
+
+  (Этот файл — часть проекта GridMatrix.
+
+   Проект GridMatrix - свободная программа: вы можете перераспространять ее и/или
+   изменять ее на условиях Стандартной общественной лицензии GNU в том виде,
+   в каком она была опубликована Фондом свободного программного обеспечения;
+   либо версии 3 лицензии, либо (по вашему выбору) любой более поздней
+   версии.
+
+   Программа GridMatrix распространяется в надежде, что она будет полезной,
+   но БЕЗО ВСЯКИХ ГАРАНТИЙ; даже без неявной гарантии ТОВАРНОГО ВИДА
+   или ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННЫХ ЦЕЛЕЙ. Подробнее см. в Стандартной
+   общественной лицензии GNU.
+
+   Вы должны были получить копию Стандартной общественной лицензии GNU
+   вместе с этой программой. Если это не так, см.   <http://www.gnu.org/licenses/>.)
+//=============================Конец блока Лицензии=====================================*/
+  -->
+
+<!-- Начало меню  -->
+
+        <nav class="navbar navbar-expand-md sticky-top navbar-inverse bg-warning">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="https://vk.com/razumufa" target="blanc"><img id="logo" width="30vw"  src="http://semenov.razum.top/Pictures/RazumLogo.png" draggable="true" ondragstart="drag(event)" onclick="{$('.advertisment').hide(); setTimeout(function() {$('.advertisment').show()}, 300000);}" alt='КоБЛаБ "РАЗУМ"' title='КоБЛаБ "РАЗУМ" - скрыть рекламу на 5 минут'/></a>
+              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" onclick="{showMainPage();}">Главная <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <!--a class="nav-link" href="#" onclick="{showDescription();}" >Пункт 1</a-->
+                        <div class="dropdown">
+                            <a href="#"class="nav-link dropdown-toggle bg-warning" type="button" id="menu1" data-toggle="dropdown">Пункт 1<span class="caret"></span></a>
+                            <ul class="dropdown-menu bg-warning" role="menu" aria-labelledby="menu1">
+                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="{showDescription();}">Пункт 1.1</a></li>
+                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="{showCompatibilityTable();}">Пункт 1.2</a></li>
+                                <li role="presentation" class="dropdown-divider"></li>
+                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="{show4Smartphones();}">Пункт 1.3</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="{showArticles();}">Пункт 2</a>
+                    </li>
+                    <!--li class="nav-item">
+                        <div class="dropdown">
+                            <a href="#"class="nav-link dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Статьи<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#">Пункт 2</a></li>
+                                <li role="presentation" class="dropdown-divider"></li>
+                                <li class="dropdown-item" role="presentation">                                    <!--a role="menuitem" tabindex="-1" href="#">
+                                        <div class="dropdown">
+                                            <a href="#"class="nav-link dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Пункт 2<span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#">Пункт 2.1</a></li>
+                                                <li role="presentation" class="dropdown-divider"></li>
+                                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#">Пункт 2.2</a></li>
+                                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#">Пункт 2.3</a></li>
+                                            </ul>
+                                        </div>
+                                    </a-->
+
+                                    <!--a role="menuitem" tabindex="-1" href="#">Диеты</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li-->
+
+                    <li class="nav-item">
+                        <!--a class="nav-link" href="#">О портале</a-->
+                        <div class="dropdown">
+                            <a href="#"class="nav-link dropdown-toggle bg-warning" type="button" id="menu1" data-toggle="dropdown">О портале<span class="caret"></span></a>
+                            <ul class="dropdown-menu bg-warning" role="menu" aria-labelledby="menu1">
+                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="{showInformation();}">Сведения</a></li>
+                                <li role="presentation" class="dropdown-divider"></li>
+                                <!--li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="{init();}">Отладка</a></li-->
+                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="{showADdescription();}">Реклама</a></li>
+                                <li class="dropdown-item" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="{showContactUs();}">Обратная связь</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                  <input class="form-control mr-sm-2" type="text" placeholder="Найти">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+                </form>
+              </div>
+            </div>
+        </nav>
+
+<!-- Конец меню  -->
+
+
+
+        <div id="advertisment-top" class="py-5 advertisment">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-block">
+                                <div id="vitandmin" style="text-align: center;">
+                                    <a href="http://vitandmin.su" target="blanc">
+                                        <img style="width: 80vw; height: 16vw;" src="pictures/Advirtisment/vitandmin.png" alt="vitandmin.su" title="Витамины и минералы. Составьте ваш дневной рацион, с учётом рекомендуемого содержания витаминов и минералов и их совместимости, перетащив нужные продукты в области, соответствующие меню завтрака, обеда и ужина"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+<!----------------------пространство для опытов---------------------->
+
+    
+        <div id="craftsplace" class="py-5">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="">Эмульсионные изображения на ваших объектах</h3>
+                        <h6>Введите адреса изображений, чтобы добавить их в список. Перетащите изображения в центральную область, чтобы проверить как они будут выглядеть друг поверх друга. Перетаскивайте элементы, "схватив" за знак "+". Чтобы удалить элемент, выброcите их из контейнеров. Изображения можете брать, например, <a href="https://clipartpng.com/" target="blanc">отсюда</a>.</h6>
+                    </div>
+                  </div>
+
+
+
+				<form id="imgAdd">
+					<input type="number" placeholder="Введите адрес изображения и выберите список, в который его добавить" ng-model="number" ng-keypress="catchEnter($event)" />
+					<!--div class="form-inline">
+						<button ng-click="number=number">Добавить</button>
+					</div-->					
+				</form>
+
+
+                <div class="grid-container">
+                  <div ng-repeat="i in getNumber(number)" class="item{{$index+1}}">
+					<img src="http://semenov.razum.top/Pictures/RazumLogo.png" />  
+				  </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+			var gridMatrix = angular.module('gridMatrix', []);
+			gridMatrix.controller('craft', function($scope) {
+				
+				$scope.number = 20;
+
+				$scope.getNumber = function(num) { var x=new Array(); for(var i=0;i<num;i++){ x.push(i+1); } return x; }
+				
+				$scope.buildTemplate = function(num) { 
+					var template = ""; 
+					for (var i = 0; i < Math.floor(Math.sqrt(num * 16/9)); i++) {
+						template += "auto"; 
+						if (i < num-1) {
+							template += " "; 
+						}							
+					} 
+					return template;
+				}
+				
+			    $scope.catchEnter = function($event){
+			  	    var keyCode = $event.which || $event.keyCode;
+				    if (keyCode === 13) {
+					   // Do that thing you finally wanted to do
+					   $scope.addItem();
+				    }
+			    }
+			});
+        </script>
+<!----------------------конец пространства для опытов---------------------->
+
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------------>
+        <div id="description" style="display: none;"></div>
+        <div id="for-smartphones" style="display: none;">
+            <h3>Скачайте приложение для вашего смартфона</h3>
+            <ul>
+                <li><a href="#" target="blanc">Андроид</a></li>
+                <li><a href="#" target="blanc">iOS</a></li>
+            </ul>
+        </div>
+        <div id="information" style="display: none;">
+            <h3>О портале</h3>
+            <h2>Здравствуй, путник!</h2>
+            <p>
+            </p>
+            <p style="text-align: right;">
+                <em><strong>С уважением,</strong><br />коллектив портала VitAndMin</em>
+            </p>
+            <p>
+                P.S. Портал постоянно пополняется новыми статьями и приложениями, а инструмент составления меню - новыми продуктами и элементами. Заходите почаще!
+            </p>
+        </div>
+        <div id="articles" style="display: none;">
+            <!-- VK Widget -->
+            <div id="vk_groups"></div>
+        </div>
+        <div id="advertisment-description" style="display: none;"></div>
+        <div id="contact-us" style="display: none;">
+            <div class="container-fluid">
+                <form class="form-horizontal" action="https://getsimpleform.com/messages?form_api_token=2d86d626a4d317ac3a539fcdbe78181d" method="post">
+                    <div class="form-group">
+                        <!-- the redirect_to is optional, the form will redirect to the referrer on submission -->
+                        <input type='hidden' name='redirect_to' value='http://vitandmin.su' />
+                        <!-- all your input fields here.... -->
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="simple_form-field-name"></label>
+                        <div class="col-md-12">
+                            <input type="text" id="simple_form-field-name" name="name" class="form-control" placeholder="Ваше имя" value="" required="required" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="simple_form-field-email"></label>
+                        <div class="col-md-12">
+                            <input type="email" id="simple_form-field-email" name="email" class="form-control" placeholder="Электронная почта" value="" required="required" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="simple_form-field-phone"></label>
+                        <div class="col-md-12">
+                            <input type="text" id="simple_form-field-phone" name="phone" class="form-control" placeholder="Номер телефона" value=""  />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="simple_form-field-comments"></label>
+                        <div class="col-md-12">
+                            <textarea id="simple_form-field-content" rows="10"  name="content" class="form-control input-lg" placeholder="Ваше сообщение" required="required"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <br />
+                            <button id="simple_form-field-submit" name="submit" class="btn btn-warning">Отправить <span></span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="advertisment-bottom" class="py-5 advertisment">
+            <div class="container-fluid">
+                <div class="row">
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- CDN scripts locally -->
+        <script src="js/jquery-3.2.1.slim.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src='js/dragula.min.js'></script>
+        <!--script src="js/angular.min.js"></script-->
+        <!--script type="text/javascript" src="http://vk.com/js/api/openapi.js?150"></script-->
+<!-- CDN scripts >
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js'></script-->
+        <!--script type="text/javascript" src="http://vk.com/js/api/openapi.js?150"></script-->
+<!-- Local scripts -->
+        <script type="text/javascript" src="js/gridmatrix.js"></script>
+
+<!-- VK Widgets-->
+        <div id="vk_community_messages" style="display: none;"></div>
+
+<!-- Put this div tag to the place, where the Comments block will be -->
+        <div id="vk_comments"></div>
+
+        <script type="text/javascript">
+//            маленькое облачко в углу экрана
+//            VK.Widgets.CommunityMessages("vk_community_messages", 155167160, {expanded: "0", tooltipButtonText: "Есть вопрос?"});
+//            подготовка стены сообщества
+//            $('#vk_groups').data('turnedOff', 1);
+//            комментарии внизу страницы
+//            VK.init({apiId: 6219786, onlyWidgets: true});
+//            VK.Widgets.Comments("vk_comments", {limit: 10, attach: "*"});
+        </script>
+<!-- VK Widgets-->
+    
+
+        <script>
+            document.addEventListener("DOMContentLoaded", init);
+//            document.addEventListener("load", init);
+//            window.onload = init;
+//                alert('Страница загружена');
+//                setTimeout(init(), 5000);
+        </script>
+        <ul id='mirrorContainer'></ul>
+    </body>
+</html>

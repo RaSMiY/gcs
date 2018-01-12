@@ -1,0 +1,238 @@
+/* Created by RaSMiY */ 
+/*/============================Блок лицензии============================================
+Copyright (c) RaSMiY semenov@razum.top
+This file is part of EmulsyPaint project.
+
+    EmulsyPaint project is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EmulsyPaint project is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EmulsyPaint project.  If not, see <http://www.gnu.org/licenses/>.
+
+  (Этот файл — часть проекта EmulsyPaint.
+
+   Проект EmulsyPaint - свободная программа: вы можете перераспространять ее и/или
+   изменять ее на условиях Стандартной общественной лицензии GNU в том виде,
+   в каком она была опубликована Фондом свободного программного обеспечения;
+   либо версии 3 лицензии, либо (по вашему выбору) любой более поздней
+   версии.
+
+   Программа EmulsyPaint распространяется в надежде, что она будет полезной,
+   но БЕЗО ВСЯКИХ ГАРАНТИЙ; даже без неявной гарантии ТОВАРНОГО ВИДА
+   или ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННЫХ ЦЕЛЕЙ. Подробнее см. в Стандартной
+   общественной лицензии GNU.
+
+   Вы должны были получить копию Стандартной общественной лицензии GNU
+   вместе с этой программой. Если это не так, см. <http://www.gnu.org/licenses/>.)
+//=============================Конец блока Лицензии=====================================*/
+
+
+/* bootstrap bug fixes and additions*/
+.navbar-toggler-icon{background-image:url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")}
+
+
+/* ====================блок настроек рекламных контэйнеров=================================*/
+.advertisment div {
+	text-align: center;
+}
+.advertisment {
+	border: 1px solid black; border-radius: 5px;
+	margin: 0.2em;
+}
+#profport img {
+	width: 100%;
+}
+/* ====================конец блока настроек рекламных контэйнеров===========================*/
+
+#logo {width: 2em; height: 2em;}
+#craftsplace {border: 1px solid black; border-radius: 5px;}
+#description, #information, #advertisment-description, #articles, #for-smartphones {text-align: justify; clear: both; display: none; padding: 1em;}
+#description img {float: right; width: 10em; height: 10em;}
+#articles {
+	padding: 1em;
+}
+#description h3, #information h3, #advertisment-description h3, #articles h3, #for-smartphones h3 {text-align: center;}
+#information p {
+	text-indent: 2em;
+}
+
+h6 {text-align: justify}
+
+
+button {
+	padding: 0;
+}
+.handle { /* handle for moving element */
+	position: absolute;
+	padding: 0 3vmin 3vmin 1vmin;
+	top: 0;
+	left: 0;
+	cursor: move;
+}
+.rem { /* кнопка удаления элемента */
+	position: absolute;
+	top: 0;
+	right: 1vmin;
+	margin-left: 1vmin;
+    background-color: rgba(255,255,255,0);
+    color: red;
+    border: none;
+    cursor: pointer;
+}
+
+ /* вид элемента во время перетаскивания */
+#mirrorContainer{
+	list-style: none;
+	list-style-position: inside;
+	position: relative;
+}
+.gu-mirror li {
+	position: relative;
+}
+.gu-mirror li p {
+	position: absolute;
+	right: 0.3em;
+	bottom: 0.3em;
+	text-align: center;
+	margin: 0;
+	white-space: nowrap;
+	font-size: 1vmax;
+}
+.gu-mirror.rem {
+	right: 0;
+}
+/* конец блока вида элемента во время перетаскивания */
+
+
+.carousel-horizontal {
+	border: 1px solid black; 
+	border-radius: 5px; 
+	padding: 0;
+	font-size: 2vmin;
+	display: -webkit-box;
+	list-style: none;
+	list-style-position: inside;
+	overflow-X: auto;
+	overflow-Y: hidden;
+	height: 14vw;
+	margin-bottom: 0;
+}
+.carousel-horizontal li {
+	border: 1px dashed grey;
+	position: relative;
+	width: 14vw;
+}
+.carousel-vertical {
+	border: 1px solid black; 
+	border-radius: 5px; 
+	font-size: 2vmin;
+	text-align: center; 
+	padding: 0;
+	list-style: none;
+	list-style-position: inside;
+	overflow-X: hidden;
+	overflow-Y: auto;
+	width: 14vw;
+	height: calc(14vw + 10px + 2rem + 43vw);
+	margin-top: 2rem;
+	margin-bottom: 0;
+}
+.carousel-vertical li {
+	padding: 1vh 0 1vh  0;
+	border: 1px dashed grey;
+	position: relative;
+	height: 14vw;
+}
+ul {
+	list-style: none;
+	list-style-position: inside;
+}
+
+.grid-container img {
+	width: 90%;
+    animation-name: rotation;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+/*	height: 90%*/
+}
+@keyframes rotation {
+    0%   {}
+    100%  {transform: rotate(360deg);}
+}
+
+/*
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto 14vw;
+  grid-template-rows: calc(14vw + 2rem) auto;
+  grid-gap: 10px;
+  background-color: #2196F3;
+}*/
+.grid-container > div {
+  text-align: center;
+  box-sizing: border-box;
+  border: solid 1px;
+  padding: 0;
+}
+
+#imgAdd {
+	margin-bottom: 2px;
+}
+
+#imgAdd>input {
+	width: 100%;
+}
+
+#imgAdd div * {
+	margin: 2px 0.5em 0 2em;
+	padding: 0 1em 0 1em;
+}
+
+#imgAdd button {
+	margin-left: 0;
+}
+
+
+/*
+.item1 { grid-area: 1 / 1 / 2 / 3; position: relative; }
+.item2 { grid-area: 1 / 3 / 3 / 4; position: relative; }
+.item3 { grid-area: 2 / 1 / 3 / 2; }
+.item4 { grid-area: 2 / 2 / 3 / 3; }
+
+.item2>h4 {
+	position: absolute;
+	overflow: hidden;
+	right: 0;
+	white-space: nowrap;
+}
+
+.polygons>h4 {
+	text-align: center;
+}
+.polygon {
+	width: 100%;
+	height: calc(100% - 2rem - 2px);
+	border: 1px solid black;
+	border-radius: 5px;
+	box-sizing: border-box;
+	position: relative;
+	padding: 0;
+}
+
+.polygon li{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+*/
