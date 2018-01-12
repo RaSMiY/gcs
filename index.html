@@ -177,15 +177,15 @@ This file is part of GridMatrix project.
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="">Эмульсионные изображения на ваших объектах</h3>
-                        <h6>Введите адреса изображений, чтобы добавить их в список. Перетащите изображения в центральную область, чтобы проверить как они будут выглядеть друг поверх друга. Перетаскивайте элементы, "схватив" за знак "+". Чтобы удалить элемент, выброcите их из контейнеров. Изображения можете брать, например, <a href="https://clipartpng.com/" target="blanc">отсюда</a>.</h6>
+                        <h3 class="">Check performance of CSS engine</h3>
+                        <h6>Enter the number of image objects from which will be built the matrix.</h6>
                     </div>
                   </div>
 
 
 
 				<form id="imgAdd">
-					<input type="number" placeholder="Введите адрес изображения и выберите список, в который его добавить" ng-model="number" ng-keypress="catchEnter($event)" />
+					<input type="number" placeholder="20" ng-model="number" ng-keypress="catchEnter($event)" />
 					<!--div class="form-inline">
 						<button ng-click="number=number">Добавить</button>
 					</div-->					
@@ -209,8 +209,9 @@ This file is part of GridMatrix project.
 				$scope.getNumber = function(num) { var x=new Array(); for(var i=0;i<num;i++){ x.push(i+1); } return x; }
 				
 				$scope.buildTemplate = function(num) { 
-					var template = ""; 
-					for (var i = 0; i < Math.floor(Math.sqrt(num * 16/9)); i++) {
+					var template = "";
+					num = Math.floor(Math.sqrt(num * 16/9));
+					for (var i = 0; i < num; i++) {
 						template += "auto"; 
 						if (i < num-1) {
 							template += " "; 
